@@ -16,7 +16,7 @@ export default function TopTabs() {
   const pathname = usePathname();
 
   return (
-    <div className="mx-auto max-w-4xl px-4">
+    // <div className="mx-auto max-w-3xl px-4">
       <div className="relative border-b border-gray-300">
         {/* 탭 행 */}
         <nav className="flex items-center justify-center gap-10">
@@ -32,11 +32,11 @@ export default function TopTabs() {
               >
                 <span
                   className={[
-                    "uppercase tracking-wider",
+                    "uppercase tracking-wider font-noto",
                     "text-xl md:text-2xl",
                     active
-                      ? "text-slate-100 font-semibold"
-                      : "text-slate-300",
+                      ? "dark:text-slate-100 text-slate-900 font-semibold"
+                      : "dark:text-slate-300 text-slate-950",
                   ].join(" ")}
                 >
                   {label}
@@ -46,7 +46,7 @@ export default function TopTabs() {
                 {active && (
                   <motion.span
                     layoutId="tabs-underline"
-                    className="absolute -bottom-px left-0 h-0.5 w-full bg-slate-200"
+                    className="absolute -bottom-px left-0 h-0.5 w-full dark:bg-slate-200 bg-black"
                     transition={{
                       type: "spring",
                       stiffness: 500,
@@ -60,6 +60,6 @@ export default function TopTabs() {
         </nav>
 
       </div>
-    </div>
+    // </div>
   );
 }
