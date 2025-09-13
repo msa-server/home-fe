@@ -4,7 +4,7 @@ import { IoMdMail } from "react-icons/io";
 
 export default function ProfileCard() {
   return (
-    <section className="font-noto flex items-center gap-6 p-6">
+    <div className="font-noto flex items-center gap-6 p-6">
       {/* 프로필 이미지 */}
       <div className="flex-shrink-0">
         <Image
@@ -12,14 +12,15 @@ export default function ProfileCard() {
           alt="프로필 이미지"
           width={128}
           height={128}
-          className="aspect-square object-cover rounded-full border"
+          sizes="(max-width: 640px) 79px, 128px"
+          className="aspect-square object-cover rounded-full border sm:w-[128px] sm:h-[128px] w-[79px] h-[79px]"
         />
       </div>
 
       {/* 소개 텍스트 */}
       <div>
-        <h2 className="text-2xl font-bold">BieNew22</h2>
-        <p className="text-base text-gray-600 dark:text-white">코드에 땀 묻히는 중...💦</p>
+        <h2 className="sm:text-2xl text-xl font-bold">BieNew22</h2>
+        <p className="sm:text-base text-xs text-gray-600 dark:text-white">코드에 땀 묻히는 중...💦</p>
 
         {/* 소셜 아이콘 링크 */}
         <div className="mt-2 flex gap-3 text-gray-500">
@@ -39,6 +40,6 @@ export default function ProfileCard() {
           </a>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
