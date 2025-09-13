@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Source_Code_Pro } from "next/font/google";
+import { Geist, Geist_Mono, Source_Code_Pro, Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "./_component/ThemeProvider";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 const sourceCodePro = Source_Code_Pro({
   subsets: ["latin"],
@@ -14,9 +9,10 @@ const sourceCodePro = Source_Code_Pro({
   variable: "--font-sourcecodepro",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const notoSansKr = Noto_Sans_KR({
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-noto-sans-kr",
 });
 
 export const metadata: Metadata = {
@@ -32,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${sourceCodePro.variable} antialiased`}
+        className={`${sourceCodePro.variable} ${notoSansKr.variable} antialiased`}
       >
         <ThemeProvider>{children}</ThemeProvider>
       </body>

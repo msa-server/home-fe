@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Header from "./_component/Header";
+import ProfileCard from "./_component/ProfileCard";
 
 export default function Home() {
   return (
     <div>
       <Header />
+      <ProfileCard />
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
         <Image
           className="dark:invert"

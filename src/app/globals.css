@@ -1,11 +1,11 @@
+@config "../../tailwind.config.ts";
 @import "tailwindcss";
 
 
 @theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono); */
 
-@theme {
   --font-sourcecodepro: var(--font-sourcecodepro);
+  --font-noto: var(--font-noto-sans-kr);
 }
