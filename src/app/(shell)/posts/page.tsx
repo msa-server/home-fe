@@ -2,7 +2,7 @@
 import Sidebar from "../../_temp/sidebar";
 import { Suspense } from "react";
 import Link from "next/link";
-import PageBar from "@/app/_component/PageBar";
+import PageNavigation from "@/app/_component/PageNavigation";
 import PostCard from "@/app/_component/PostCard";
 
 type ArticleTag = {
@@ -48,7 +48,7 @@ export default async function PostsPage({
   const totalPages = Math.max(Math.ceil(articleCount / size), 1);
 
   return (
-    <main className="mx-auto max-w-4xl py-8 flex gap-8">
+    <main className="mx-auto max-w-4xl py-8 flex flex-col gap-8">
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
         {articles.map((post) => (
           <PostCard
@@ -60,17 +60,15 @@ export default async function PostsPage({
             category="SERIES"             // TODO : 실제 게시글 시리즈 교체
             authorName="bienew22"
             authorAvatarUrl="/profile.webp"
-            createdAt={post.createdAt.slice(0, 10).replaceAll("-", ".")}
-          />
+            createdAt={post.createdAt.slice(0, 10).replaceAll("-", ".")} />
         ))}
+      </section>
 
-        <PageBar
+      <PageNavigation
           page={page}
           totalPages={totalPages}
           size={size}
-          basePath="/posts"
-        />
-      </section>
+          basePath="/posts" />
     </main>
   );
 }
