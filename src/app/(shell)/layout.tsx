@@ -34,11 +34,11 @@ export default function ShellLayout({children, }: Readonly<{ children: React.Rea
           <div className="h-6"></div>
           <main className="mx-auto max-w-5xl px-4">
 
-            <div className="mx-auto max-w-3xl flex justify-start">
+            <div className="mx-auto max-w-4xl flex justify-start">
               <ProfileCard />
             </div>
 
-            <div className="mx-auto max-w-3xl">
+            <div className="mx-auto max-w-4xl">
               <TopTabs />
             </div>
 
