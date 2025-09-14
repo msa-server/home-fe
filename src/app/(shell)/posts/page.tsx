@@ -48,7 +48,7 @@ export default async function PostsPage({
   const totalPages = Math.max(Math.ceil(articleCount / size), 1);
 
   return (
-    <main className="mx-auto max-w-4xl py-8 flex flex-col gap-8">
+    <main className="mx-auto max-w-4xl flex flex-col gap-8">
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
         {articles.map((post) => (
           <PostCard
