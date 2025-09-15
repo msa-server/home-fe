@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Ellipsis  } from "lucide-react";
 
 function buildPages(current: number, total: number, window = 2) {
   // window=2  → 한 번에 보이는 연속 숫자 최대 5개
@@ -52,7 +52,7 @@ export default function PageNavigation({
   return (
     <nav
       aria-label="Pagination"
-      className="mt-10 mb-14 flex items-center justify-center gap-2 text-sm"
+      className="mt-10 mb-14 flex items-center justify-center gap-2 text-sm font-bold font-noto"
     >
       {/* 이전: 꺾쇠 아이콘 */}
       <Link
@@ -76,7 +76,7 @@ export default function PageNavigation({
           <span key={p} className="flex items-center">
             {needDots && (
               <span aria-hidden className="mx-2 text-muted-foreground">
-                …
+                <Ellipsis />
               </span>
             )}
             <Link
