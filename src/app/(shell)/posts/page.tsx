@@ -59,7 +59,7 @@ export default async function PostsPage({ searchParams }: { searchParams: Promis
   const articles = await fetchArticles(currentPage, size);
 
   return (
-    <main className="mx-auto max-w-4xl flex flex-col gap-8">
+    <main className="mx-auto max-w-4xl flex flex-col gap-8 select-none">
       <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
         {articles.map((post) => (
           <PostCard

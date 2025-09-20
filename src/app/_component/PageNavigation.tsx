@@ -52,7 +52,7 @@ export default function PageNavigation({
   return (
     <nav
       aria-label="Pagination"
-      className="mt-10 mb-14 flex items-center justify-center gap-2 text-sm font-bold font-noto"
+      className="mt-10 mb-14 flex items-center justify-center gap-2 text-sm font-bold font-noto dark:text-neutral-200"
     >
       {/* 이전: 꺾쇠 아이콘 */}
       <Link

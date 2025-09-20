@@ -20,7 +20,7 @@ export default function ProfileCard() {
       {/* 소개 텍스트 */}
       <div>
         <h2 className="sm:text-2xl text-xl font-bold">BieNew22</h2>
-        <p className="sm:text-base text-xs text-gray-600 dark:text-white">코드에 땀 묻히는 중...💦</p>
+        <p className="sm:text-base text-xs text-gray-600 dark:text-gray-100">코드에 땀 묻히는 중...💦</p>
 
         {/* 소셜 아이콘 링크 */}
         <div className="mt-2 flex gap-3 text-gray-500">

@@ -65,7 +65,7 @@ export default function PostCard({
 
         {/* 제목 */}
         <Link href={href} className="block">
-          <h3 className="text-xl font-semibold leading-snug">{title}</h3>
+          <h3 className="text-xl font-semibold leading-snug dark:text-neutral-200">{title}</h3>
         </Link>
 
         {/* 하단 메타 */}
@@ -80,8 +80,8 @@ export default function PostCard({
               className="h-10 w-10 rounded-full border object-cover"
             />
             <div className="leading-tight">
-              <div className="font-medium">{authorName}</div>
-              <div className="text-sm text-muted-foreground">{createdAt}</div>
+              <div className="font-medium dark:text-neutral-100">{authorName}</div>
+              <div className="text-sm text-muted-foregroun dark:text-neutral-100">{createdAt}</div>
             </div>
           </div>
           </Link>
