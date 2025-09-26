@@ -21,7 +21,7 @@ export default async function TagsPage() {
   const totalData = await fetchTags();
 
   return (
-    <main className="mx-auto max-w-4xl py-3">
+    <main className="mx-auto max-w-4xl py-3 font-noto">
       <div className="flex flex-wrap gap-3">
         {totalData.map((tag) => (
           <Link
@@ -33,7 +33,7 @@ export default async function TagsPage() {
               transition-colors
             "
           >
-            {tag.tagName} ({tag.count})
+           <p className="inline-block font-bold">{tag.tagName}</p> ({tag.count})
           </Link>
         ))}
       </div>
