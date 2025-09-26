@@ -2,14 +2,12 @@ import "../globals.css";
 import { sourceCodePro, notoSansKr } from "../_component/Font";
 import ThemeProvider from "../_component/ThemeProvider";
 import Header from "../_component/Header";
-import ProfileCard from "../_component/ProfileCard";
-import TopTabs from "../_component/Toptabs";
 import { baseMetadata } from "../_component/Metadata";
 
 
-export const metadata = baseMetadata
+export const metadata = baseMetadata;
 
-export default function HomeLayout({children, }: Readonly<{ children: React.ReactNode }>) {
+export default function DetailLayout({children, }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -20,13 +18,13 @@ export default function HomeLayout({children, }: Readonly<{ children: React.Reac
           <div className="h-6"></div>
           <main className="mx-auto max-w-5xl px-4">
 
-            <div className="mx-auto max-w-4xl flex justify-start">
+            {/* <div className="mx-auto max-w-4xl flex justify-start">
               <ProfileCard />
             </div>
 
             <div className="mx-auto max-w-4xl">
               <TopTabs />
-            </div>
+            </div> */}
 
             <section className="py-8">{children}</section>
           </main>
