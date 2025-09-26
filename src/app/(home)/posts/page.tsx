@@ -1,31 +1,7 @@
 import PageNavigation from "@/app/_component/PageNavigation";
 import PostCard from "@/app/_component/PostCard";
+import { Article, ArticleCount } from "@/types/article";
 
-type ArticleCount = {
-  articleCount: number;
-}
-
-type ArticleTag = {
-  tagId: number;
-  tagName: string;
-  count: number;
-};
-
-type Series = {
-  seriesId: number;
-  seriesName: string;
-  articleCount: number;
-}
-
-type Article = {
-  articleId: number;
-  title: string;
-  content: string;
-  articleTags: ArticleTag[];
-  series: Series;
-  createdAt: string;
-  modifiedAt: string;
-};
 
 async function fetchArticles(
   page: number,

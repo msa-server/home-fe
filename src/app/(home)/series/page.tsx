@@ -1,17 +1,11 @@
 import SeriesList from "./SeriesList";
+import { Series } from "@/types/series";
 
-type SeriesDetail = {
-  seriesId: string;
-  seriesName: string;
-  articleCount: number;
-  coverImageUrl?: string;
-};
-
-async function fetchSeriesPageAction(): Promise<SeriesDetail[]> {
+async function fetchSeriesPageAction(): Promise<Series[]> {
   
   const res = await fetch("http://localhost:9000/v1/series", { cache: "no-store", method: "GET" });
   if (!res.ok) throw new Error("시리즈 정보 불러오지 못했습니다.");
-  const all: SeriesDetail[] = await res.json();
+  const all: Series[] = await res.json();
 
   return all;
 }

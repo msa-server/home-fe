@@ -1,11 +1,5 @@
 import Link from "next/link";
-
-type TagDetail = {
-  tagId: number;
-  tagName: string;
-  count: number;
-};
-
+import { TagDetail } from "@/types/tags";
 
 async function fetchTags(): Promise<TagDetail[]> {
   const url = `http:/localhost:9000/v1/tags`;

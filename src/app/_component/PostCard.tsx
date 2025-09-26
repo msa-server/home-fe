@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ImBooks } from "react-icons/im";
+import { ArticleTag } from "@/types/article";
 
-type ArticleTag = { tagId: number; tagName: string };
+
 type Post = {
   id: number | string;
   href: string;

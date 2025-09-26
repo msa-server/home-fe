@@ -3,18 +3,12 @@
 import { useEffect, useRef, useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Series } from "@/types/series";
 
-type SeriesDetail = {
-  seriesId: string;
-  seriesName: string;
-  articleCount: number;
-  coverImageUrl?: string;
-};
-
-export default function SeriesList({totalSeries}: {totalSeries: SeriesDetail[]}) {
+export default function SeriesList({totalSeries}: {totalSeries: Series[]}) {
   const showSize = 6;
   
-  const [items, setItems] = useState<SeriesDetail[]>([]);
+  const [items, setItems] = useState<Series[]>([]);
   const [page, setPage] = useState(0);
   const [isPending, startTransition] = useTransition();
   const loaderRef = useRef<HTMLDivElement | null>(null);

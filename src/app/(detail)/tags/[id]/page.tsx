@@ -1,5 +1,6 @@
-export default function TagsDetailView() {
+export default function TagsDetailView({params} : {params: {id : string}}) {
+    const { id } = params;
     return (
-        <main> series detail </main>
+        <main> Tag {id} detail </main>
     )
 }
