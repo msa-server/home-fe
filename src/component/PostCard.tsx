@@ -45,16 +45,18 @@ export default function PostCard({
       <div className="px-3 pb-2 pt-2">
         {/* 카테고리 pill */}
         {category && (
+          <Link href={`/series/${category.seriesId}`}>
           <div className="mb-1 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium 
             dark:text-yellow-400 text-blue-400">
             <span><ImBooks /></span>
-            <span>{category}</span>
+            <span>{category.seriesName}</span>
           </div>
+          </Link>
         )}
 
         {/* 제목 */}
         <Link href={href} className="block">
-          <h3 className="text-lg font-semibold leading-snug dark:text-neutral-200 whitespace-normal break-words">{title}</h3>
+          <h3 className="text-lg font-semibold leading-snug dark:text-neutral-200 whitespace-normal break-all text-pretty">{title}</h3>
         </Link>
 
         {/* 하단 메타 */}

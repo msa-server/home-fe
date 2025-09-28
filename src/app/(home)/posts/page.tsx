@@ -44,7 +44,7 @@ export default async function PostsPage({ searchParams }: { searchParams: Promis
             href={`/post/${post.articleId}`}
             title={`${post.title}`}
             coverUrl={`/profile.webp`}    // TODO : 실제 썸네일 URL로 교체
-            category={`${post.series.seriesName}`}
+            category={post.series}
             authorName="bienew22"
             authorAvatarUrl="/profile.webp"
             createdAt={post.createdAt.slice(0, 10).replaceAll("-", ".")} />

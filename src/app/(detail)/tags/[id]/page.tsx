@@ -1,6 +1,7 @@
 import { TagDetail } from "@/types/tags";
 import PageNavigation from "@/component/PageNavigation";
 import { Article } from "@/types/article";
+import PostCompactCard from "@/component/PostCompactCard";
 
 async function fetchTag(id: string): Promise<TagDetail> {
   const res = await fetch(`http://localhost:9000/v1/tags/${id}`, {
@@ -57,12 +58,24 @@ export default async function TagsDetailView({
         </h1>
 
         {/* 얇은 구분선 */}
-        <div className="mt-8 border-t border-gray-200 dark:border-gray-700" />
+        <div className="mt-4 border-t border-gray-200 dark:border-gray-700" />
       </section>
 
-      <section>
-        {/* TODO: 실제 게시글 전시하기. */}
-        게시글 섹션</section>
+      <section className="mt-6">
+        {articles.map((post) => (
+
+                  <PostCompactCard
+                    key={post.articleId}
+                    id={post.articleId}
+                    href={`/post/${post.articleId}`}
+                    title={`${post.title}`}
+                    coverUrl={`/profile.webp`}    // TODO : 실제 썸네일 URL로 교체
+                    tags={post.articleTags}
+                    authorName="bienew22"
+                    authorAvatarUrl="/profile.webp"
+                    createdAt={post.createdAt.slice(0, 10).replaceAll("-", ".")} />
+                ))}
+      </section>
 
        <PageNavigation
                 page={currentPage}
