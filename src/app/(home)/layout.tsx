@@ -1,37 +1,27 @@
-import "../globals.css";
-import { sourceCodePro, notoSansKr } from "../_component/Font";
-import ThemeProvider from "../_component/ThemeProvider";
-import Header from "../_component/Header";
-import ProfileCard from "../_component/ProfileCard";
-import TopTabs from "../_component/Toptabs";
-import { baseMetadata } from "../_component/Metadata";
+import ThemeProvider from "../../component/ThemeProvider";
+import Header from "../../component/Header";
+import ProfileCard from "../../component/ProfileCard";
+import TopTabs from "../../component/Toptabs";
 
 
-export const metadata = baseMetadata
-
-export default function HomeLayout({children, }: Readonly<{ children: React.ReactNode }>) {
+export default function HomeLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${sourceCodePro.variable} ${notoSansKr.variable} antialiased`}
-      >
-        <ThemeProvider>
-          <Header />
-          <div className="h-6"></div>
-          <main className="mx-auto max-w-5xl px-4">
+    <section>
+        <Header />
+        <div className="h-6"></div>
+        <main className="mx-auto max-w-5xl px-4">
+          <div className="mx-auto max-w-4xl flex justify-start">
+            <ProfileCard />
+          </div>
 
-            <div className="mx-auto max-w-4xl flex justify-start">
-              <ProfileCard />
-            </div>
+          <div className="mx-auto max-w-4xl">
+            <TopTabs />
+          </div>
 
-            <div className="mx-auto max-w-4xl">
-              <TopTabs />
-            </div>
-
-            <section className="py-8">{children}</section>
-          </main>
-        </ThemeProvider>
-      </body>
-    </html>
+          <section className="py-8">{children}</section>
+        </main>
+    </section>
   );
 }

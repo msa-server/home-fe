@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
 
+
 export default function Header() {
   return (
     <header className="shadow-sm dark:shadow-[0_2px_4px_rgba(255,255,255,0.1)]">

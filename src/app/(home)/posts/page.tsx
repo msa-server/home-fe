@@ -1,5 +1,5 @@
-import PageNavigation from "@/app/_component/PageNavigation";
-import PostCard from "@/app/_component/PostCard";
+import PageNavigation from "@/component/PageNavigation";
+import PostCard from "@/component/PostCard";
 import { Article, ArticleCount } from "@/types/article";
 
 

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ImBooks } from "react-icons/im";
-import { ArticleTag } from "@/types/article";
+import { TagDetail } from "@/types/tags";
 
 
 type Post = {
@@ -15,7 +15,7 @@ type Post = {
   authorName: string;
   authorAvatarUrl: string;
   createdAt: string; // "2023.04.05" 등
-  tags?: ArticleTag[];
+  tags?: TagDetail[];
 };
 
 export default function PostCard({
