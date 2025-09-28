@@ -4,7 +4,7 @@ import { IoMdMail } from "react-icons/io";
 
 export default function ProfileCard() {
   return (
-    <div className="font-noto flex items-center gap-6 p-6">
+    <div className="font-noto flex items-center gap-6 p-6 select-none">
       {/* 프로필 이미지 */}
       <div className="flex-shrink-0">
         <Image
