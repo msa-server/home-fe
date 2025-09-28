@@ -1,5 +1,5 @@
 export type TagDetail = {
-  tagId: number;
+  tagId: string;
   tagName: string;
   count: number;
 };

@@ -1,5 +1,5 @@
 export type Series = {
-  seriesId: number;
+  seriesId: string;
   seriesName: string;
   articleCount: number;
 
