@@ -2,6 +2,7 @@ import { TagDetail } from "@/types/tags";
 import PageNavigation from "@/component/PageNavigation";
 import { Article } from "@/types/article";
 import PostCompactCard from "@/component/PostCompactCard";
+import Link from "next/link";
 
 async function fetchTag(id: string): Promise<TagDetail> {
   const res = await fetch(`http://localhost:9000/v1/tags/${id}`, {
@@ -49,7 +50,9 @@ export default async function TagsDetailView({
       <section className="select-none">
         {/* SERIES 배지 */}
         <span className="inline-block bg-black dark:bg-white text-white dark:text-black text-sm font-extrabold tracking-wider uppercase px-3 py-1 rounded">
+          <Link href="/tags">
           Tags
+          </Link>
         </span>
 
         {/* 타이틀 */}
