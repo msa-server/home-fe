@@ -3,20 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ImBooks } from "react-icons/im";
-import { TagDetail } from "@/types/tags";
+import { Post } from "@/types/local";
 
-
-type Post = {
-  id: number | string;
-  href: string;
-  title: string;
-  coverUrl: string; // 썸네일 이미지
-  category?: string; // 카테고리 라벨
-  authorName: string;
-  authorAvatarUrl: string;
-  createdAt: string; // "2023.04.05" 등
-  tags?: TagDetail[];
-};
 
 export default function PostCard({
   id,
