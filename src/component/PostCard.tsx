@@ -42,7 +42,7 @@ export default function PostCard({
       </div>
 
       {/* 본문 */}
-      <div className="px-3 pb-6 pt-2">
+      <div className="px-3 pb-2 pt-2">
         {/* 카테고리 pill */}
         {category && (
           <div className="mb-1 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium 
@@ -54,11 +54,11 @@ export default function PostCard({
 
         {/* 제목 */}
         <Link href={href} className="block">
-          <h3 className="text-xl font-semibold leading-snug dark:text-neutral-200">{title}</h3>
+          <h3 className="text-lg font-semibold leading-snug dark:text-neutral-200 whitespace-normal break-words">{title}</h3>
         </Link>
 
         {/* 하단 메타 */}
-        <div className="mt-4 flex items-center justify-between">
+        <div className="mt-2 flex items-center justify-between">
             <Link href={href} >
           <div className="flex items-center gap-3">
             <Image
