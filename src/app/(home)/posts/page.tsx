@@ -1,7 +1,7 @@
-import PageNavigation from "@/component/PageNavigation";
-import PostCard from "@/component/PostCard";
 import { Article, ArticleCount } from "@/types/article";
-
+import { Suspense } from "react";
+import CircleLoading from "@/component/CircleLoading";
+import PostsGrid from "./PostsGrid";
 
 async function fetchArticles(
   page: number,
@@ -24,38 +24,16 @@ async function fetchTotalArticles(): Promise<ArticleCount> {
 }
 
 export default async function PostsPage({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
-  const { articleCount } = await fetchTotalArticles();
   const { page } = await searchParams;
-  const size = 12;
-
-  const totalPages = Math.max(Math.ceil(articleCount / size), 1);
-
-  const currentPage = Math.min(Math.max(parseInt(page ?? "1", 10) || 1, 1), totalPages);
-  
-  const articles = await fetchArticles(currentPage, size);
 
   return (
-    <main className="mx-auto max-w-4xl flex flex-col gap-8 select-none">
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
-        {articles.map((post) => (
-          <PostCard
-            key={post.articleId}
-            id={post.articleId}
-            href={`/post/${post.articleId}`}
-            title={`${post.title}`}
-            coverUrl={`/profile.webp`}    // TODO : 실제 썸네일 URL로 교체
-            category={post.series}
-            authorName="bienew22"
-            authorAvatarUrl="/profile.webp"
-            createdAt={post.createdAt.slice(0, 10).replaceAll("-", ".")} />
-        ))}
-      </section>
-
-      <PageNavigation
-          page={currentPage}
-          totalPages={totalPages}
-          size={size}
-          basePath="/posts" />
-    </main>
-  );
+    <Suspense
+        key={page}
+        fallback={
+          <CircleLoading size={72} dotCount={8} duration={1.0} />
+        }
+      >
+        <PostsGrid page={page} />
+      </Suspense>
+  )
 }
