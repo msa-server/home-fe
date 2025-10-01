@@ -1,0 +1,20 @@
+.divider {
+  position: relative;
+  height: 2px;                 /* 선 두께 */
+  background: rgb(244 63 94);  /* rose 계열 */
+  max-width: 42rem;            /* max-w-2xl */
+  margin: 1.5rem auto 0;       /* mt-6 + 가운데 정렬 */
+}
+.divider::before,
+.divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;                 /* 원 크기 */
+  background: rgb(244 63 94);
+  border-radius: 9999px;
+  transform: translateY(-50%);
+}
+.divider::before { left: -4px; }
+.divider::after  { right: -4px; }
