@@ -51,7 +51,5 @@ export function inlineParser(text: string): InlineNode[] {
         pushText(text.slice(text.length - normalTextCnt));
     }
 
-    console.log("inline test : " + result.length);
-
     return result;
 }

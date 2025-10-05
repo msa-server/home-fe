@@ -1,9 +1,11 @@
 export type BlockNode = 
 | {type: BlockNodeType.HEADING; depth: 0|1|2|3|4|5; children: InlineNode[] }
+| {type: BlockNodeType.PARAGRAPH; children: InlineNode[]}
 ;
 
 export enum BlockNodeType {
-    HEADING = "h1",
+    HEADING = "heading",
+    PARAGRAPH = "paragraph",
 };
 
 export type InlineNode = 

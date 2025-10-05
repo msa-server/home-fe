@@ -1,7 +1,9 @@
 import { BlockNode, InlineNode , BlockNodeType, InlineNodeType} from "@/types/markdown";
 
 export default function ViewPost({nodes} : {nodes: BlockNode[]}) {
-  return <>{nodes.map((n, i) => <Block node={n} key={i} />)}</>;
+  return <section className="font-noto">
+      {nodes.map((n, i) => <Block node={n} key={i} />)}
+    </section>;
 }
 
 function Block({node} : {node: BlockNode}) {
@@ -12,6 +14,9 @@ function Block({node} : {node: BlockNode}) {
       case BlockNodeType.HEADING: {
         const className = `font-bold text-${headingFontSize[node.depth]}`;
         return <div className={className}><Inline nodes={node.children} /></div>
+      }
+      case BlockNodeType.PARAGRAPH: {
+        return <p><Inline nodes={node.children} /></p>
       }
     }
 }
