@@ -6,15 +6,12 @@ export function blockParser(input: string): BlockNode[] {
     const lines = input.replace(/\r\n?/g, "\n").split("\n");
     const result: BlockNode[] = [];
 
-    console.log(lines);
-
     let nowlineIdx = 0;
     const peekLine = () => lines[nowlineIdx] ?? null;
     const nextLine = () => lines[nowlineIdx++] ?? null;
 
     while (nowlineIdx < lines.length) {
         const nowLine = peekLine();
-        console.log("now line : " + nowLine);
 
         // !을 통하여 빈문자열과 NUL을 잡아 줌.
         if (!nowLine) {
@@ -25,9 +22,7 @@ export function blockParser(input: string): BlockNode[] {
         // 1) 제목 블럭 파싱 : [ ## title ] 형식의 문장을 획득.
         // 여러줄의 제목은 없음.
         const h = nowLine.match(/^(#{2,7})\s+(.*)$/);
-        console.log("h : " + h);
         if (h) {
-            console.log("h :" + h);
             nextLine();
 
             result.push({
@@ -38,12 +33,43 @@ export function blockParser(input: string): BlockNode[] {
 
             continue;
         }
+        
+        // 2) 코드 블럭 파싱 : [ ```lang ... ``` ] 형식의 문장.
+        const code = nowLine.match(/^```(\w+)?\s*$/);
+        if (code) {
+            nextLine();
+            const lang = code[1] ?? "text";
+            
+            const buf: string[] = [];
 
+            // 코드 본문 추가하기.
+            while (peekLine() !== null && !peekLine().startsWith("```")) {
+                buf.push(peekLine());
+                nextLine();
+            }
+
+            // 마지막줄 처리.
+            if (peekLine()) {
+                nextLine();
+            }
+
+            result.push({
+                type: BlockNodeType.CODE_BLOCK,
+                language: lang,
+                code: buf.join("\n")
+            })
+
+            // console.log(result[result.length - 1]);
+
+            continue;
+        }
+
+        // 평문 추가.
         result.push({
             type: BlockNodeType.PARAGRAPH,
             children: inlineParser(nowLine),
         });
-        console.log(result);
+
         nextLine();
     }
 

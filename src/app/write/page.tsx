@@ -46,11 +46,7 @@ export default function PostEditor() {
 
       {/* 미리보기 영역 */}
       <section className="p-6 overflow-y-auto bg-gray-50">
-        <h1 className="text-3xl font-bold mb-2">{title || "제목 미리보기"}</h1>
-        <p className="text-sm text-gray-500 mb-4">{tags}</p>
-        <article className="prose max-w-none">
-          <ViewPost nodes={result} />
-        </article>
+        <ViewPost title={title || "제목 미리보기"} tags={tags} nodes={result} />
       </section>
     </main>
   );
