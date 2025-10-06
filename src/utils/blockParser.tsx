@@ -14,7 +14,7 @@ export function blockParser(input: string): BlockNode[] {
         const nowLine = peekLine();
 
         // !을 통하여 빈문자열과 NUL을 잡아 줌.
-        if (!nowLine) {
+        if (nowLine === null) {
             nextLine(); // 다음 줄로 이동.
             continue;
         }
@@ -65,11 +65,16 @@ export function blockParser(input: string): BlockNode[] {
         }
 
         // 평문 추가.
-        result.push({
+        if (nowLine === "") {
+            result.push({
+                type: BlockNodeType.EMPTY_LINE
+            })
+        } else {
+            result.push({
             type: BlockNodeType.PARAGRAPH,
             children: inlineParser(nowLine),
         });
-
+        }
         nextLine();
     }
 
