@@ -7,6 +7,9 @@ import { Clipboard, ClipboardCheck } from "lucide-react";
 const Prism = require("prismjs");
 require("prismjs/components/prism-java");
 require("prismjs/components/prism-python");
+require("prismjs/components/prism-bash");
+require("prismjs/components/prism-docker");
+require("prismjs/components/prism-json");
 require("prismjs/components/prism-javascript");
 
 type Props = {
