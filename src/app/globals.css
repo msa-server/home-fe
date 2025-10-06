@@ -1,7 +1,7 @@
 @config "../../tailwind.config.ts";
 @import "tailwindcss";
 @import "prismjs/themes/prism-tomorrow.css";
-
+@tailwind utilities;
 
 @theme inline {
   /* --font-sans: var(--font-geist-sans);
@@ -9,4 +9,55 @@
 
   --font-sourcecodepro: var(--font-sourcecodepro);
   --font-noto: var(--font-noto-sans-kr);
+}
+
+
+@layer components {
+  ol.my-ol {
+    --li-bg: darkcyan;
+    counter-reset: orderedlist;
+  }
+
+  ul.my-ul {
+    --li-bg: darkcyan;
+  }
+
+  ul.my-ul > li {
+    display: flex;
+    align-items: center;
+  }
+  
+  ul.my-ul > li::before {
+    content: "●";
+    font-family: "Indie Flower", cursive;
+    font-size: 1em;
+    line-height: 1.25em;
+    width: 1.25em;
+    padding-top: 0px;
+    text-align: center;
+    color: #fff;
+    /* background-color: var(--li-bg);
+    border-radius: 0.25em; */
+
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+
+  ol.my-ol > li::before {
+    counter-increment: orderedlist;
+    content: counter(orderedlist);
+    font-family: "Indie Flower", cursive;
+    font-size: 1em;
+    line-height: 1.25em;
+    width: 1.25em;
+    padding-top: 0px;
+    text-align: center;
+    color: #fff;
+    background-color: var(--li-bg);
+    border-radius: 0.25em;
+
+    /* 추가적으로 숫자 위치 보정 */
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
 }

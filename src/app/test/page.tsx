@@ -11,6 +11,11 @@ export default function TestPage() {
         <h4> h4 </h4>
         <h5> h5 </h5>
         <h6> h6 </h6>
+        <ol>
+          <li>hello1</li>
+          <li>hello2</li>
+          <li>hello3</li>
+        </ol>
       </>
   );
 }

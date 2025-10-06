@@ -8,7 +8,17 @@ export function blockParser(input: string): BlockNode[] {
 
     let nowlineIdx = 0;
     const peekLine = () => lines[nowlineIdx] ?? null;
-    const nextLine = () => lines[nowlineIdx++] ?? null;
+    const nextLine = () => lines[++nowlineIdx] ?? null;
+
+    const parseList = (reg: RegExp) => {
+        const ol: string[] = [];
+
+        do {
+            ol.push(peekLine()?.replace(reg, ""));
+        } while (reg.test(nextLine()));
+
+        return ol;
+    }
 
     while (nowlineIdx < lines.length) {
         const nowLine = peekLine();
@@ -19,15 +29,15 @@ export function blockParser(input: string): BlockNode[] {
             continue;
         }
 
-        // 1) 제목 블럭 파싱 : [ ## title ] 형식의 문장을 획득.
+        // 1) 제목 블럭 파싱 : [ # title ] 형식의 문장을 획득.
         // 여러줄의 제목은 없음.
-        const h = nowLine.match(/^(#{2,7})\s+(.*)$/);
+        const h = nowLine.match(/^(#{1,6})\s+(.*)$/);
         if (h) {
             nextLine();
 
             result.push({
                 type: BlockNodeType.HEADING,
-                depth: (h[1].length - 2) as 0 | 1 | 2 | 3 | 4 | 5,
+                depth: (h[1].length - 1) as 0 | 1 | 2 | 3 | 4 | 5,
                 children: inlineParser(h[2]),
             });
 
@@ -60,6 +70,33 @@ export function blockParser(input: string): BlockNode[] {
             })
 
             // console.log(result[result.length - 1]);
+
+            continue;
+        }
+
+        // 3. ol 리스트 파싱 : [ * a ] 형식의 문장.
+        const OL_REG = /^[*]\s+/;
+        if (OL_REG.test(nowLine)) {
+            const ol: string[] = parseList(OL_REG);
+
+            result.push({
+                type: BlockNodeType.LIST_BLOCK,
+                ordered: true,
+                items: ol
+            })
+
+            continue;
+        }
+
+        const UL_REG = /^[-]\s+/;
+        if (UL_REG.test(nowLine)) {
+            const ul: string[] = parseList(UL_REG);
+
+            result.push({
+                type: BlockNodeType.LIST_BLOCK,
+                ordered: false,
+                items: ul                
+            })
 
             continue;
         }

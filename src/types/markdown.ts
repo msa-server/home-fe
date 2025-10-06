@@ -3,13 +3,15 @@ export type BlockNode =
 | {type: BlockNodeType.PARAGRAPH; children: InlineNode[]}
 | {type: BlockNodeType.CODE_BLOCK; language: string; code: string}
 | {type: BlockNodeType.EMPTY_LINE}
+| {type: BlockNodeType.LIST_BLOCK; ordered: boolean; items: string[]}
 ;
 
 export enum BlockNodeType {
     HEADING = "heading",
     PARAGRAPH = "paragraph",
     CODE_BLOCK = "code",
-    EMPTY_LINE = "empty_line"
+    EMPTY_LINE = "empty_line",
+    LIST_BLOCK = "list",
 };
 
 export type InlineNode = 

@@ -1,13 +1,24 @@
 import { BlockNode, InlineNode, BlockNodeType, InlineNodeType } from "@/types/markdown";
 import CodeBlock from "./CodeBlock";
 
-
-export default function ViewPost({ nodes, title, tags }: { nodes: BlockNode[], title: string, tags: string }) {
+export default function ViewPost({
+  nodes,
+  title,
+  tags,
+}: {
+  nodes: BlockNode[];
+  title: string;
+  tags: string;
+}) {
   return (
     <section>
-        <h1 className="text-5xl font-bold mb-2">{title || "제목 미리보기"}</h1>
-        <p className="text-sm text-gray-500 mb-4">{tags}</p>
-        <article className="prose max-w-none">{nodes.map((n, i) => (<Block node={n} key={i} />))}</article>    
+      <h1 className="text-5xl font-bold mb-2">{title || "제목 미리보기"}</h1>
+      <p className="text-sm text-gray-500 mb-4">{tags}</p>
+      <article className="prose max-w-none">
+        {nodes.map((n, i) => (
+          <Block node={n} key={i} />
+        ))}
+      </article>
     </section>
   );
 }
@@ -18,28 +29,63 @@ function Block({ node }: { node: BlockNode }) {
   switch (node.type) {
     case BlockNodeType.HEADING: {
       const className = `font-bold text-${headingFontSize[node.depth]}`;
-      return (<div className={className}> <Inline nodes={node.children} /></div>);
+      return (
+        <div className={className}>
+          {" "}
+          <Inline nodes={node.children} />
+        </div>
+      );
     }
     case BlockNodeType.PARAGRAPH: {
-      return (<p><Inline nodes={node.children} /></p>);
+      return (
+        <p>
+          <Inline nodes={node.children} />
+        </p>
+      );
     }
     case BlockNodeType.CODE_BLOCK: {
       return <CodeBlock code={node.code} lang={node.language} />;
-    } 
+    }
     case BlockNodeType.EMPTY_LINE: {
-      return <br />
+      return <br />;
+    }
+    case BlockNodeType.LIST_BLOCK: {
+      const ListTag = node.ordered ? "ol" : "ul";
+      
+      const listClass = node.ordered
+        ? `my-ol`
+        : `my-ul`;
+
+      return (
+        <ListTag className={listClass}>
+          {node.items.map((it, i) => (
+            <li
+              key={i}
+              className="mb-1"
+            >
+              {it}
+            </li> 
+          ))}
+        </ListTag>
+      );
     }
   }
 }
 
 function Inline({ nodes }: { nodes: InlineNode[] }) {
-    return (<>{nodes.map((n, i) => (<InlineLeaf node={n} key={i} />))}</>);
+  return (
+    <>
+      {nodes.map((n, i) => (
+        <InlineLeaf node={n} key={i} />
+      ))}
+    </>
+  );
 }
 
 function InlineLeaf({ node }: { node: InlineNode }) {
-    switch (node.type) {
-        case InlineNodeType.NORMAL: {
-            return <>{node.value}</>;
-        }
+  switch (node.type) {
+    case InlineNodeType.NORMAL: {
+      return <>{node.value}</>;
     }
+  }
 }
