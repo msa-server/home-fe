@@ -31,13 +31,13 @@ export function blockParser(input: string): BlockNode[] {
 
         // 1) 제목 블럭 파싱 : [ # title ] 형식의 문장을 획득.
         // 여러줄의 제목은 없음.
-        const h = nowLine.match(/^(#{1,6})\s+(.*)$/);
+        const h = nowLine.match(/^(#{1,5})\s+(.*)$/);
         if (h) {
             nextLine();
 
             result.push({
                 type: BlockNodeType.HEADING,
-                depth: (h[1].length - 1) as 0 | 1 | 2 | 3 | 4 | 5,
+                depth: (h[1].length - 1) as 0 | 1 | 2 | 3 | 4,
                 children: inlineParser(h[2]),
             });
 
@@ -88,6 +88,7 @@ export function blockParser(input: string): BlockNode[] {
             continue;
         }
 
+        // 4. ul 리스트 파싱 : [ - a ] 형식의 문장
         const UL_REG = /^[-]\s+/;
         if (UL_REG.test(nowLine)) {
             const ul: string[] = parseList(UL_REG);
@@ -97,6 +98,19 @@ export function blockParser(input: string): BlockNode[] {
                 ordered: false,
                 items: ul                
             })
+
+            continue;
+        }
+
+        // 5. 구분선 파싱
+        
+        // 5-1) like notion style.
+        if (nowLine === '---') {
+            nextLine();
+
+            result.push({
+                type: BlockNodeType.DIVIDER_LINE_NORMAL
+            });
 
             continue;
         }

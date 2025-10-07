@@ -3,11 +3,12 @@ import CodeBlock from "@/component/CodeBlock";
 import InlineRenderer from "./inlineRenderer";
 
 export default function BlockRenderer({ node }: { node: BlockNode }) {
-  const headingFontSize = ["4xl", "3xl", "2xl", "xl", "lg", "base"];
+  const headingFontSize = ["3xl", "2xl", "xl", "lg", "base"];
 
   switch (node.type) {
     case BlockNodeType.HEADING: {
       const className = `font-bold text-${headingFontSize[node.depth]}`;
+
       return (
         <div className={className}>
           <InlineRenderer nodes={node.children} />
@@ -41,6 +42,12 @@ export default function BlockRenderer({ node }: { node: BlockNode }) {
           ))}
         </ListTag>
       );
+    }
+    case BlockNodeType.DIVIDER_LINE_NORMAL: {
+        return (
+            <div className="my-2 mb-4">
+                <hr className="border-t border-neutral-200 dark:border-neutral-700" />
+            </div>);
     }
   }
 }
