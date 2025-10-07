@@ -1,5 +1,5 @@
-import { BlockNode, InlineNode, BlockNodeType, InlineNodeType } from "@/types/markdown";
-import CodeBlock from "./CodeBlock";
+import { BlockNode } from "@/types/markdown";
+import BlockRenderer from "@/utils/blockRenderer ";
 
 export default function ViewPost({
   nodes,
@@ -16,76 +16,12 @@ export default function ViewPost({
       <p className="text-sm text-gray-500 mb-4">{tags}</p>
       <article className="prose max-w-none">
         {nodes.map((n, i) => (
-          <Block node={n} key={i} />
+          <BlockRenderer node={n} key={i} />
         ))}
       </article>
     </section>
   );
 }
 
-function Block({ node }: { node: BlockNode }) {
-  const headingFontSize = ["4xl", "3xl", "2xl", "xl", "lg", "base"];
 
-  switch (node.type) {
-    case BlockNodeType.HEADING: {
-      const className = `font-bold text-${headingFontSize[node.depth]}`;
-      return (
-        <div className={className}>
-          {" "}
-          <Inline nodes={node.children} />
-        </div>
-      );
-    }
-    case BlockNodeType.PARAGRAPH: {
-      return (
-        <p>
-          <Inline nodes={node.children} />
-        </p>
-      );
-    }
-    case BlockNodeType.CODE_BLOCK: {
-      return <CodeBlock code={node.code} lang={node.language} />;
-    }
-    case BlockNodeType.EMPTY_LINE: {
-      return <br />;
-    }
-    case BlockNodeType.LIST_BLOCK: {
-      const ListTag = node.ordered ? "ol" : "ul";
-      
-      const listClass = node.ordered
-        ? `my-ol`
-        : `my-ul`;
 
-      return (
-        <ListTag className={listClass}>
-          {node.items.map((it, i) => (
-            <li
-              key={i}
-              className="mb-1"
-            >
-              {it}
-            </li> 
-          ))}
-        </ListTag>
-      );
-    }
-  }
-}
-
-function Inline({ nodes }: { nodes: InlineNode[] }) {
-  return (
-    <>
-      {nodes.map((n, i) => (
-        <InlineLeaf node={n} key={i} />
-      ))}
-    </>
-  );
-}
-
-function InlineLeaf({ node }: { node: InlineNode }) {
-  switch (node.type) {
-    case InlineNodeType.NORMAL: {
-      return <>{node.value}</>;
-    }
-  }
-}
