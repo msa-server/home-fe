@@ -11,7 +11,7 @@ export default function ViewPost({
   tags: string;
 }) {
   return (
-    <section className="font-noto">
+    <section className="font-noto whitespace-pre">
       <h1 className="text-5xl font-bold mb-2">{title || "제목 미리보기"}</h1>
       <p className="text-sm text-gray-500 mb-4">{tags}</p>
       <article className="prose max-w-none">
