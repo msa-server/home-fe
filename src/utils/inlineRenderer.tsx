@@ -17,12 +17,9 @@ function InlineLeaf({ node }: { node: InlineNode }) {
     }
     case InlineNodeType.INLINE_CODE: {
       return <code
-      className="inline rounded-md bg-neutral-100 border border-neutral-200 lx-1 px-1
-                      text-[13px] leading-normal text-neutral-700
-                     dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-200"
-        >
-          {node.value}
-        </code>
+      className="inline rounded-md leading-normal lx-1 px-0.5 py-0.5 border
+        dark:bg-neutral-300  dark:border-neutral-200 dark:text-neutral-900"
+        >{node.value}</code>
     }
   }
 }

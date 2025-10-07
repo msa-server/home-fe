@@ -15,9 +15,11 @@ export enum BlockNodeType {
 };
 
 export type InlineNode = 
-| {type: "text"; value: string}
+| {type: InlineNodeType.NORMAL; value: string}
+| {type: InlineNodeType.INLINE_CODE; value: string}
 ;
 
 export enum InlineNodeType {
     NORMAL = "text",
+    INLINE_CODE = "inline_code",
 }

@@ -23,7 +23,7 @@ export function blockParser(input: string): BlockNode[] {
     while (nowlineIdx < lines.length) {
         const nowLine = peekLine();
 
-        // !을 통하여 빈문자열과 NUL을 잡아 줌.
+        // NUL을 잡아 줌.
         if (nowLine === null) {
             nextLine(); // 다음 줄로 이동.
             continue;
