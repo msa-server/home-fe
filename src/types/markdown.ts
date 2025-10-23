@@ -19,11 +19,13 @@ export enum BlockNodeType {
 export type InlineNode = 
 | {type: InlineNodeType.NORMAL; value: string}
 | {type: InlineNodeType.INLINE_CODE; value: string}
-| {type: InlineNodeType.STRONG; children: InlineNode[]}
+| {type: InlineNodeType.EMPHASIS; children: InlineNode[]}
+| {type: InlineNodeType.ITALIC; children: InlineNode[]}
 ;
 
 export enum InlineNodeType {
     NORMAL = "text",
     INLINE_CODE = "inline_code",
-    STRONG = "strong",
+    EMPHASIS = "emphasis",
+    ITALIC = "italic"
 }

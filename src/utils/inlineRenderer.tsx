@@ -21,8 +21,15 @@ function InlineLeaf({ node }: { node: InlineNode }) {
         dark:bg-neutral-300  dark:border-neutral-200 dark:text-neutral-900"
         >{node.value}</code>
     }
-    case InlineNodeType.STRONG: {
+    case InlineNodeType.EMPHASIS: {
       return <span className="font-bold">
+        <>{node.children.map((n, i) => {
+           return <InlineLeaf node={n}  key={i} />
+        })}</>
+      </span>
+    }
+    case InlineNodeType.ITALIC: {
+      return <span className="italic">
         <>{node.children.map((n, i) => {
            return <InlineLeaf node={n}  key={i} />
         })}</>

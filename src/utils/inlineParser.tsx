@@ -107,8 +107,11 @@ export function inlineParser(text: string): InlineNode[] {
                     continue;
                 }
                 case "*": {
-                    tryParseStrong(ctx);
+                    tryParseEmphasis(ctx);
                     continue;
+                }
+                case "_": {
+                    tryParseItalic(ctx);
                 }
             }
         }
@@ -156,7 +159,7 @@ function tryParseInlineCode(ctx: Context): void {
     }
 }
 
-function tryParseStrong(ctx: Context): void {
+function tryParseEmphasis(ctx: Context): void {
     // consume heading [ $* ] two chars.
     ctx.consumeCh(2);
     
@@ -182,7 +185,40 @@ function tryParseStrong(ctx: Context): void {
 
         console.log("ctx.buf : " + ctx.buf.join(""));
         ctx.result.push({
-            type: InlineNodeType.STRONG,
+            type: InlineNodeType.EMPHASIS,
+            children: inlineParser(ctx.buf.join(""))
+        });
+        ctx.buf.length = 0;
+    }
+}
+
+function tryParseItalic(ctx: Context): void {
+    // consume heading [ $_ ] two chars.
+    ctx.consumeCh(2);
+    
+    // 코드 블럭내 글자 하나씩 처리.
+    while (ctx.peekCh() !== null) {
+        // closing 이나오면 종료.
+        if (ctx.peekCh() === '$' && ctx.peekNextCh() === '_') {
+            break;
+        }
+
+        ctx.pushBuf();
+    }
+
+    // 정상적인 탈출의 경우 ctx.peekCh() 가 closing의 $ 를 가리키게 됨.
+
+    if (ctx.peekCh() === null) {
+        // closing을 찾지 못함.
+        ctx.rollbackCh();
+        ctx.flushBufAsText("$_");
+    } else {
+        // closing 소비
+        ctx.consumeCh(2);
+
+        console.log("ctx.buf : " + ctx.buf.join(""));
+        ctx.result.push({
+            type: InlineNodeType.ITALIC,
             children: inlineParser(ctx.buf.join(""))
         });
         ctx.buf.length = 0;
