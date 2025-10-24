@@ -35,5 +35,8 @@ function InlineLeaf({ node }: { node: InlineNode }) {
         })}</>
       </span>
     }
+    case InlineNodeType.LINK: {
+      return <a href={node.url} target="_blank" rel="noopener  noreferrer">{node.placeholder || node.url}</a>
+    }
   }
 }

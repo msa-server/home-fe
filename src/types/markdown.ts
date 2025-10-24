@@ -21,11 +21,13 @@ export type InlineNode =
 | {type: InlineNodeType.INLINE_CODE; value: string}
 | {type: InlineNodeType.EMPHASIS; children: InlineNode[]}
 | {type: InlineNodeType.ITALIC; children: InlineNode[]}
+| {type: InlineNodeType.LINK; url: string, placeholder: string | null}
 ;
 
 export enum InlineNodeType {
     NORMAL = "text",
     INLINE_CODE = "inline_code",
     EMPHASIS = "emphasis",
-    ITALIC = "italic"
+    ITALIC = "italic",
+    LINK = "link",
 }

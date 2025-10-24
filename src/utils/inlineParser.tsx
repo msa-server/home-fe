@@ -50,8 +50,6 @@ function createContext(text: string): Context {
         const data = `${prefix ?? ""}${buf.join("")}${suffix ?? ""}`;
         buf.length = 0;
 
-        console.log("data = " + data);
-
         if (data.length) {
             const last = result[-1];
 
@@ -66,7 +64,6 @@ function createContext(text: string): Context {
 
     // 현재 buf 만큼 nIdx 롤백 시킴.
     const rollbackCh = () => {
-        console.log("rollback : " + buf.length);
         nIdx -= buf.length;
         buf.length = 0;
     }
@@ -83,10 +80,8 @@ function createContext(text: string): Context {
 // 줄 내부 단위로 파싱을 진행.
 export function inlineParser(text: string): InlineNode[] {
     const ctx = createContext(text);
-    
-    console.log("to parse : " + text);
 
-    while (ctx.haveCh) {
+    while (ctx.haveCh()) {
         const nowCh = ctx.peekCh();
 
         if (nowCh === null) {
@@ -112,6 +107,11 @@ export function inlineParser(text: string): InlineNode[] {
                 }
                 case "_": {
                     tryParseItalic(ctx);
+                    continue;
+                }
+                case "[": {
+                    tryParseLink(ctx);
+                    continue;
                 }
             }
         }
@@ -132,7 +132,7 @@ function tryParseInlineCode(ctx: Context): void {
     ctx.consumeCh(2);
 
     // 코드 블럭내 글자 하나씩 처리.
-    while (ctx.peekCh() !== null) {
+    while (ctx.haveCh()) {
         // closing 이나오면 종료.
         if (ctx.peekCh() === '$' && ctx.peekNextCh() === '`') {
             break;
@@ -143,11 +143,7 @@ function tryParseInlineCode(ctx: Context): void {
 
     // 정상적인 탈출의 경우 ctx.peekCh() 가 closing의 $ 를 가리키게 됨.
 
-    if (ctx.peekCh() === null) {
-        // closing을 찾지 못함.
-        ctx.rollbackCh();
-        ctx.flushBufAsText("$`");
-    } else {
+    if (ctx.haveCh()) {
         // closing 소비
         ctx.consumeCh(2);
 
@@ -156,6 +152,10 @@ function tryParseInlineCode(ctx: Context): void {
             value: ctx.buf.join("")
         });
         ctx.buf.length = 0;
+    } else {
+        // closing을 찾지 못함.
+        ctx.rollbackCh();
+        ctx.flushBufAsText("$`");
     }
 }
 
@@ -164,7 +164,7 @@ function tryParseEmphasis(ctx: Context): void {
     ctx.consumeCh(2);
     
     // 코드 블럭내 글자 하나씩 처리.
-    while (ctx.peekCh() !== null) {
+    while (ctx.haveCh()) {
         // closing 이나오면 종료.
         if (ctx.peekCh() === '$' && ctx.peekNextCh() === '*') {
             break;
@@ -175,11 +175,7 @@ function tryParseEmphasis(ctx: Context): void {
 
     // 정상적인 탈출의 경우 ctx.peekCh() 가 closing의 $ 를 가리키게 됨.
 
-    if (ctx.peekCh() === null) {
-        // closing을 찾지 못함.
-        ctx.rollbackCh();
-        ctx.flushBufAsText("$*");
-    } else {
+    if (ctx.haveCh()) {
         // closing 소비
         ctx.consumeCh(2);
 
@@ -189,6 +185,10 @@ function tryParseEmphasis(ctx: Context): void {
             children: inlineParser(ctx.buf.join(""))
         });
         ctx.buf.length = 0;
+    } else {
+        // closing을 찾지 못함.
+        ctx.rollbackCh();
+        ctx.flushBufAsText("$*");
     }
 }
 
@@ -197,7 +197,7 @@ function tryParseItalic(ctx: Context): void {
     ctx.consumeCh(2);
     
     // 코드 블럭내 글자 하나씩 처리.
-    while (ctx.peekCh() !== null) {
+    while (ctx.haveCh()) {
         // closing 이나오면 종료.
         if (ctx.peekCh() === '$' && ctx.peekNextCh() === '_') {
             break;
@@ -208,11 +208,7 @@ function tryParseItalic(ctx: Context): void {
 
     // 정상적인 탈출의 경우 ctx.peekCh() 가 closing의 $ 를 가리키게 됨.
 
-    if (ctx.peekCh() === null) {
-        // closing을 찾지 못함.
-        ctx.rollbackCh();
-        ctx.flushBufAsText("$_");
-    } else {
+    if (ctx.haveCh()) {
         // closing 소비
         ctx.consumeCh(2);
 
@@ -222,5 +218,62 @@ function tryParseItalic(ctx: Context): void {
             children: inlineParser(ctx.buf.join(""))
         });
         ctx.buf.length = 0;
+    } else {
+        // closing을 찾지 못함.
+        ctx.rollbackCh();
+        ctx.flushBufAsText("$_");
+    }
+}
+
+function tryParseLink(ctx: Context): void {
+    // consume heading [ $_ ] two chars.
+    ctx.consumeCh(2);
+
+    // 1. 표기할 텍스트 파싱
+    while (ctx.haveCh()) {
+        if (ctx.peekCh() === ']' && ctx.peekNextCh() === '(') {
+            break;
+        }
+
+        ctx.pushBuf();
+    }
+
+    // 비정상적인 탈출의 경우 => 롤백 및 종료
+    if (!ctx.haveCh()) {
+        ctx.rollbackCh();
+        ctx.flushBufAsText("$[")
+        return;
+    }
+
+    // consume placeholder footer :  "](" 
+    ctx.pushBuf()
+    ctx.pushBuf()
+
+    // 2. 이동할 링크 파싱.
+    while(ctx.haveCh()) {
+        if (ctx.peekCh() === ')') {
+            break;
+        }
+
+        ctx.pushBuf();
+    }
+
+    // 정상적인 탈출의 경우 peekCh() == ')'
+    if (ctx.haveCh()) {
+        // closing 소비
+        ctx.consumeCh(1);
+
+        const data = ctx.buf.join("").split("](");
+        
+        ctx.result.push({
+            type: InlineNodeType.LINK,
+            placeholder: data[0],
+            url: data[1].startsWith("http") ? data[1] : `https://${data[1]}`
+        })
+        
+        ctx.buf.length = 0;
+    } else {
+        ctx.rollbackCh()
+        ctx.flushBufAsText("$[");
     }
 }
