@@ -115,6 +115,31 @@ export function blockParser(input: string): BlockNode[] {
             continue;
         }
 
+        // 6 이미지 파싱
+        const IMG_REG = /!\[\s*([^\]]*?)\s*\]\s*\(\s*([^)]+?)\s*\)\s*(?:\(\s*([^)]+?)\s*\))?/
+        
+
+        if (IMG_REG.test(nowLine)) {
+            nextLine();
+
+            const data = nowLine.match(IMG_REG);
+
+            if (data) {
+                console.log(data);
+
+                result.push({
+                type: BlockNodeType.IMAGE,
+                desc: data[1],
+                url: data[2],
+                size: isNaN(Number(data[3])) ? 100 : Number(data[3])
+                })
+
+                console.log(result[result.length - 1])
+
+                continue;
+            }
+        }
+
         // 평문 추가.
         if (nowLine === "") {
             result.push({

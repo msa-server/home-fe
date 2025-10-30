@@ -49,5 +49,15 @@ export default function BlockRenderer({ node }: { node: BlockNode }) {
                 <hr className="border-t border-neutral-200 dark:border-neutral-700" />
             </div>);
     }
+    case BlockNodeType.IMAGE: {
+      return (
+        <figure className="border rounded p-2 flex flex-col items-center text-center">
+          <img src={node.url} alt="NO IMAGE" className="h-auto"
+            style={{width: `${Math.min(Math.max(node.size ?? 100, 1), 100)}%`}}
+          loading="lazy" decoding="async" />
+          <figcaption className="text-xs mt-1 text-gray-500 dark:text-gray-400">{node.desc}</figcaption>
+        </figure>
+      )
+    }
   }
 }

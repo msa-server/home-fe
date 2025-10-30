@@ -5,6 +5,7 @@ export type BlockNode =
 | {type: BlockNodeType.EMPTY_LINE}
 | {type: BlockNodeType.LIST_BLOCK; ordered: boolean; items: string[]}
 | {type: BlockNodeType.DIVIDER_LINE_NORMAL}
+| {type: BlockNodeType.IMAGE; size: number; url: string; desc: string;}
 ;
 
 export enum BlockNodeType {
@@ -13,7 +14,8 @@ export enum BlockNodeType {
     CODE_BLOCK = "code",
     EMPTY_LINE = "empty_line",
     LIST_BLOCK = "list",
-    DIVIDER_LINE_NORMAL = "divider_line_normal"
+    DIVIDER_LINE_NORMAL = "divider_line_normal",
+    IMAGE = "image",
 };
 
 export type InlineNode = 

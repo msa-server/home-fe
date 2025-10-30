@@ -122,8 +122,6 @@ export function inlineParser(text: string): InlineNode[] {
 
     ctx.flushBufAsText();
 
-    console.log(ctx.result);
-
     return ctx.result;
 }
 
