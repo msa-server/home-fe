@@ -51,7 +51,7 @@ export default function BlockRenderer({ node }: { node: BlockNode }) {
     }
     case BlockNodeType.IMAGE: {
       return (
-        <figure className="border rounded p-2 flex flex-col items-center text-center">
+        <figure className="rounded p-2 flex flex-col items-center text-center">
           <img src={node.url} alt="NO IMAGE" className="h-auto"
             style={{width: `${Math.min(Math.max(node.size ?? 100, 1), 100)}%`}}
           loading="lazy" decoding="async" />
