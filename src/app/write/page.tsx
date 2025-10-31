@@ -3,6 +3,9 @@
 import { useState, useMemo, useRef } from "react";
 import ViewPost from "@/component/ViewPost";
 import { blockParser } from "@/utils/blockParser";
+import { ImageUp } from 'lucide-react';
+import { Code } from 'lucide-react';
+import { TooltipButton } from "@/component/TooltipButton";
 
 
 type TempImage = { id: string; file: File;};
@@ -12,6 +15,8 @@ export default function PostEditor() {
   const [tags, setTags] = useState("");
   const [tempImages, setTempImages] = useState<Record<string, TempImage>>({});
   const [content, setContent] = useState("");
+
+  const fileRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const result = useMemo(() => blockParser(content), [content]);
@@ -103,32 +108,17 @@ export default function PostEditor() {
         <div className="flex items-center gap-2 mb-2">
 
           {/* 이미지 삽입 */}
-          <label className="px-3 py-1.5 rounded-md border cursor-pointer bg-gray-50 hover:bg-gray-100 text-sm dark:text-black">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={onFileChange}
-              // disabled={isUploading}
-              className="hidden"
-            />
-            Image
-          </label>
+          <input ref={fileRef} type="file" accept="image/" onChange={onFileChange} className="hidden" />
+          <TooltipButton icon={<ImageUp />} label="upload image" tooltip="upload image"
+            onClick={() => fileRef.current?.click()} />
 
-          <button
-            type="button"
-            onClick={() => insertAtCursor("test")}
-            className="px-3 py-1.5 rounded-md border bg-gray-50 hover:bg-gray-100 text-sm dark:text-black">
-            test
-          </button>
+          {/* 코드 블럭 삽입 */}
+          <TooltipButton icon={<Code />} label="code block" tooltip="code block" 
+            onClick={() => insertAtCursor("\n```lang\n```\n")} />
+
 
           {/* 예: 향후 링크, 볼드 등 확장 */}
-          {/* <button
-            type="button"
-            onClick={() => insertAtCursor("**굵은 글씨**")}
-            className="px-3 py-1.5 rounded-md border bg-gray-50 hover:bg-gray-100 text-sm"
-          >
-            B
-          </button> */}
+
         </div>
           
         
